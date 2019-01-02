@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -66,11 +66,25 @@ app.on('ready', async () => {
   ) {
     await installExtensions();
   }
-
+  const {width, height} = screen.getPrimaryDisplay().workAreaSize
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728
+    width: 336,
+    minWidth: 336,
+    maxWidth: 336,
+    frame: false,
+//    minimizable: false,
+    resizeable: false,
+//    maximizeable: false,
+    closeable: true,
+    alwaysOnTop: true,
+    x: (width/8),
+    y: 128,
+    height: 608,
+    minheight: 524,
+    webPreferences: {
+      devTools: true,
+    },
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
